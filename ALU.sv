@@ -1,32 +1,22 @@
 module ALU (
   input [31:0] operandA, 
-  input [31:0] operandB, 
-  input [2:0]  opcode,   
+  input [31:0] operandB,
+  input [2:0] funct3, 
+  input funct7,  
   output reg [31:0] result, 
-  output reg zeroFlag,     // Set if result is zero
-  output reg carryFlag,    // Set if there's a carry-out (for addition)
-  output reg overflowFlag  // Set if there's an overflow
 );
 
 always @(*) begin
-    // Default values
-    result = 0;
-    zeroFlag = 0;
-    carryFlag = 0;
-    overflowFlag = 0;
-
-    // Perform the selected operation based on the opcode
-    case(opcode)
-        3'b000: // Addition
-            result = operandA + operandB;
-            // Check for carry and overflow
-            carryFlag = (result < operandA) || (result < operandB);
-            overflowFlag = ((operandA[31] == operandB[31]) && (operandA[31] != result[31]));
-        3'b001: // Subtraction
-            result = operandA - operandB;
-            // Check for carry and overflow
-            carryFlag = (operandA < operandB) || (operandB > result);
-            overflowFlag = ((operandA[31] != operandB[31]) && (operandA[31] != result[31]));
+    // Perform the selected operation based on the funct3 and funct7
+    case(funct3)
+        3'b000: // Addition and subtraction
+            case(funct7)
+            1'b0: // Addition
+                result = operandA + operandB;
+            1'b1: // Subtraction
+                result = operandA - operandB;
+        3'b001 // Shift left by operandB
+            result = operandA << operandB; 
         3'b010: // Logical AND
             result = operandA & operandB;
         3'b011: // Logical OR
@@ -40,9 +30,6 @@ always @(*) begin
         default: // Default to zero
             result = 0;
     endcase
-
-    // Set zeroFlag if the result is zero
-    zeroFlag = (result == 0);
 end
 
 endmodule
