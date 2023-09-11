@@ -1,15 +1,13 @@
 module ALU (
   input [31:0] operandA, 
-  input [31:0] operandB,
-  input [2:0] funct3, 
-  input funct7,  
+  input [31:0] operandB, 
+  input [2:0] funct3, // Operation selector 1
+  input funct7, // Operation selector 2
   output reg [31:0] result, 
 );
 
 always @(*) begin
-    // Perform the selected operation based on the funct3 and funct7
     case(funct3)
-        // Type R instructions
         3'b000: // Addition and subtraction
             case(funct7)
                 1'b0: // Addition
@@ -20,17 +18,15 @@ always @(*) begin
             result = operandA << operandB;
         3'b101:
             case(funct7)
-                1'b1: // Arithmetic shift right 
-                    //TODO: Entender que chucha es el shift aritmetico
+                1'b1: // Shift signed
                     if (operandB > 0) begin
                         result = operandA >>> operandB;
-                    // Llena los bits más significativos con el valor del bit de signo original.
-                    if (operandA[31] == 1)
-                        result = {32{1'b1}} & result;
-                    else
-                        result = {32{1'b0}} & result;
-                    end else
-                1'b0: // Logical shift right
+                        if (operandA[31] == 1)
+                            result = {32{1'b1}} & result;
+                        else
+                            result = {32{1'b0}} & result;
+                        end else
+                1'b0: // Shift unsigned
                     result = operandA >> operandB;
         3'b010: // Logical AND
             result = operandA & operandB;
@@ -40,8 +36,6 @@ always @(*) begin
             result = operandA ^ operandB;
         default: // Default to zero
             result = 0;
-
-        //TODO: Type I instructions
     endcase
 end
 
