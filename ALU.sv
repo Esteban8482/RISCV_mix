@@ -1,9 +1,9 @@
 module ALU (
-  input [31:0] operandA, 
-  input [31:0] operandB, 
-  input [2:0] funct3, // Operation selector 1
-  input funct7, // Operation selector 2
-  output reg [31:0] result, 
+  input logic [31:0] operandA, 
+  input logic [31:0] operandB, 
+  input logic [2:0] funct3, // Operation selector 1
+  input logic funct7, // Operation selector 2
+  output logic [31:0] result, 
 );
 
 always @(*) begin
