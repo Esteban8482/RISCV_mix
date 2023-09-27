@@ -5,18 +5,17 @@ module InstructionMemory #(parameter DEPTH = 256, string FILENAME = "instruction
 
     logic [31:0] mem [0:DEPTH-1]; // Memory array
 
-    assign instruction = mem[addr >> 2]; // byte-adress to word-address
-
-    // Filling IM using the compiled instruction file
+    assign instruction = mem[addr >> 2]; // byte-address to word-address
+    
     initial begin
         integer file, i;
         file = $fopen(FILENAME, "rb");
         if (file) begin
             for (i = 0; i < DEPTH; i = i + 1) begin
-                if (!$fread(mem[i], file)) break; // Exit the loop as soon as the file ends
+                if (!$fread(mem[i], file)) break; // Break if end-of-file or reading error occurs
             end
             $fclose(file);
         end else
-            $fatal("Unable to open file %0s", FILENAME);
+            $fatal("Unable to open file");
     end
 endmodule
