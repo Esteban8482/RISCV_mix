@@ -27,3 +27,4 @@ endmodule
 //TODO: el archivo que retorna el traductor debe tener extension ".bin48"
 //TODO: buscar "Verilator"
 //TODO: Usar little endian como estandar
+//TODO: Modulo en verilog que soporte las instrucciones tipo S, R, I. Sin incluir JAL y JALR (Entregable)
