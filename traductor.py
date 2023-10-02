@@ -49,15 +49,12 @@ instructions=[
     ]
 
 def register_to_binary(register):
-    """Convierte un registro (e.g., x1) a su representación binaria de 5 bits."""
     return format(int(register[1:]), '05b')
 
 def immediate_to_binary(value, bit_length):
-    """Convierte un valor inmediato a su representación binaria del bit_length dado."""
     return format(int(value), f'0{bit_length}b')
 
 def compile_instruction_upper(instruction, args):
-    """Compila una instrucción a su formato binario de 32 bits, considerando nombres de instrucciones en mayúsculas."""
     inst_details = next((inst for inst in instructions if inst['inst'] == instruction.upper()), None)
     if not inst_details:
         return None
@@ -70,7 +67,6 @@ def compile_instruction_upper(instruction, args):
         return None
 
 def compile_s48_to_binary(filepath):
-    """Compila instrucciones de un archivo .s48 a formato binario de 32 bits."""
     with open(filepath, "r") as file:
         lines = file.readlines()
 
