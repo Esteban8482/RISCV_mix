@@ -100,6 +100,8 @@ def immediate_to_binary(value, bit_length):
      return format(int(value), f'0{bit_length}b') 
 
 def to_upper(instruction, args):
+    # Es necesario tambien solicitar los argumentos para que al retorno de la funcion la instruccion 
+    # y los argumentos esten en el mismo orden
     return instruction.upper(), args
 
 def compile_instruction(instruction, args):
