@@ -1,0 +1,9 @@
+def sumto(x) { 
+	if (x == 0) {
+		0
+	} else {
+		x + sumto(x-1)
+	}
+}
+
+sumto(6)
