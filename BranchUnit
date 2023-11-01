@@ -15,7 +15,7 @@ module BranchUnit (
         case(branchType)
             3'b000: // BEQ (Branch if Equal)
                 if (operandA == operandB) takeBranch = 1;
-            3'  : // BNE (Branch if Not Equal)
+            3'b001: // BNE (Branch if Not Equal)
                 if (operandA != operandB) takeBranch = 1;
             3'b010: // BLT (Branch if Less Than)
                 if (operandA < operandB) takeBranch = 1;
